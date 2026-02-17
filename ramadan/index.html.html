@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمضان كريم 🌙</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%);
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            direction: rtl;
+        }
+
+        /* خلفية النجوم - بدون ظل */
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: #0a0a1a;
+        }
+
+        /* الهلال الكبير */
+        #moon {
+            position: fixed;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 150px;
+            z-index: 5;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 
+                         0 0 80px rgba(255, 215, 0, 0.5);
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes moonGlow {
+            0%, 100% {
+                text-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 
+                            0 0 80px rgba(255, 215, 0, 0.5);
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                text-shadow: 0 0 60px rgba(255, 215, 0, 1), 
+                            0 0 120px rgba(255, 215, 0, 0.7);
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+
+        /* الفوانيس المعلقة */
+        #lanterns-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .lantern-wrapper {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            top: 0;
+        }
+
+        .lantern-rope {
+            width: 3px;
+            height: 80px;
+            background: linear-gradient(to bottom, #8B7355, #654321);
+            box-shadow: 0 0 5px rgba(139, 115, 85, 0.5);
+        }
+
+        .lantern {
+            width: 50px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff9500, #ffb300);
+            border-radius: 8px 8px 20px 20px;
+            box-shadow: 0 0 30px rgba(255, 180, 0, 0.9),
+                        0 0 60px rgba(255, 180, 0, 0.6),
+                        inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+                        inset 5px 5px 15px rgba(255, 255, 255, 0.2);
+            position: relative;
+            animation: lanternGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes lanternGlow {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(255, 180, 0, 0.9),
+                            0 0 60px rgba(255, 180, 0, 0.6),
+                            inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+                            inset 5px 5px 15px rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(255, 180, 0, 1),
+                            0 0 90px rgba(255, 180, 0, 0.8),
+                            inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+                            inset 5px 5px 15px rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        .lantern::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+        }
+
+        .lantern::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+        }
+
+        /* محتوى النصوص */
+        .content {
+            position: fixed;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8),
+                         0 0 40px rgba(255, 215, 0, 0.5);
+            animation: titleFloat 3s ease-in-out infinite;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .greeting-message {
+            font-size: 1.5rem;
+            color: #fff3b0;
+            margin-bottom: 30px;
+            animation: fadeInDown 1.5s ease-out forwards;
+            opacity: 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .dua {
+            font-size: 1.3rem;
+            color: #ffe8b6;
+            line-height: 1.8;
+            animation: fadeInUp 2s ease-out 1.5s forwards;
+            opacity: 0;
+            text-shadow: 0 0 10px rgba(255, 232, 182, 0.3);
+            min-height: 60px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes lanternSwing {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(8px) translateY(2px); }
+            50% { transform: translateX(0px) translateY(5px); }
+            75% { transform: translateX(-8px) translateY(2px); }
+        }
+
+        /* استجابة الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .greeting-message {
+                font-size: 1.2rem;
+            }
+
+            .dua {
+                font-size: 1rem;
+            }
+
+            .lantern {
+                width: 35px;
+                height: 60px;
+            }
+
+            .lantern-rope {
+                height: 60px;
+            }
+
+            #moon {
+                font-size: 100px;
+                top: 20%;
+            }
+
+            .content {
+                top: 60%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .greeting-message {
+                font-size: 1rem;
+            }
+
+            .dua {
+                font-size: 0.9rem;
+            }
+
+            .lantern {
+                width: 30px;
+                height: 50px;
+            }
+
+            #moon {
+                font-size: 80px;
+                top: 18%;
+            }
+
+            .content {
+                top: 55%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- النجوم -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- الهلال -->
+<div id="moon">🌙</div>
+
+<!-- الفوانيس -->
+<div id="lanterns-container"></div>
+
+<!-- المحتوى الرئيسي -->
+<div class="content">
+    <h1>رمضان كريم 🌙</h1>
+    <p class="greeting-message">جعله الله شهر خير وبركة وتقبل فيه الطاعات</p>
+    <p class="dua" id="dua"></p>
+</div>
+
+<script>
+    // ==================== النجوم ====================
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const stars = [];
+    const starCount = 150;
+
+    // إنشاء النجوم
+    for (let i = 0; i < starCount; i++) {
+        const isGolden = Math.random() < 0.2; // 20% نجوم ذهبية
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 1.5 + 0.5,
+            opacity: Math.random() * 0.5 + 0.3,
+            color: isGolden ? '#ffd700' : '#ffffff',
+            twinkleSpeed: Math.random() * 0.02 + 0.01,
+            moveSpeed: (Math.random() - 0.5) * 0.05
+        });
+    }
+
+    // رسم النجوم
+    function drawStars() {
+        // مسح الكانفاس بدون ظل
+        ctx.fillStyle = '#0a0a1a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        stars.forEach(star => {
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fillStyle = star.color;
+            ctx.globalAlpha = star.opacity;
+            ctx.fill();
+
+            // توهج النجم
+            star.opacity += (Math.random() - 0.5) * star.twinkleSpeed;
+            star.opacity = Math.max(0.2, Math.min(1, star.opacity));
+
+            // حركة النجم للأعلى ببطء
+            star.y += star.moveSpeed;
+            if (star.y < 0) {
+                star.y = canvas.height;
+                star.x = Math.random() * canvas.width;
+            }
+        });
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(drawStars);
+    }
+
+    drawStars();
+
+    // تحديث الكانفاس عند تغيير حجم النافذة
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    // ==================== الفوانيس ====================
+    const lanternsContainer = document.getElementById('lanterns-container');
+
+    // إنشاء الفوانيس (7 فوانيس)
+    const lanternPositions = [5, 15, 30, 50, 70, 85, 95];
+    lanternPositions.forEach((position, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'lantern-wrapper';
+        wrapper.style.left = position + '%';
+        wrapper.style.animation = `lanternSwing 4s ease-in-out ${index * 0.3}s infinite`;
+
+        const rope = document.createElement('div');
+        rope.className = 'lantern-rope';
+
+        const lantern = document.createElement('div');
+        lantern.className = 'lantern';
+
+        wrapper.appendChild(rope);
+        wrapper.appendChild(lantern);
+        lanternsContainer.appendChild(wrapper);
+    });
+
+    // ==================== الدعاء التدريجي ====================
+    const duaText = 'اللهم بلغنا رمضان، واجعلنا فيه من المقبولين، واغفر لنا ذنوبنا وذنوب والدينا، وادخلنا الجنة 🌙';
+    const duaElement = document.getElementById('dua');
+    let duaIndex = 0;
+
+    function typeOutDua() {
+        if (duaIndex < duaText.length) {
+            duaElement.textContent += duaText[duaIndex];
+            duaIndex++;
+            setTimeout(typeOutDua, 40); // سرعة كتابة الحروف
+        }
+    }
+
+    // بدء الدعاء بعد تأخير قليل
+    setTimeout(typeOutDua, 2000);
+</script>
+
+</body>
+</html>
